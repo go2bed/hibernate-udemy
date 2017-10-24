@@ -1,4 +1,4 @@
-package com.epam.chadov.jdbc.entity;
+package com.epam.chadov.hibernate.entity;
 
 
 
