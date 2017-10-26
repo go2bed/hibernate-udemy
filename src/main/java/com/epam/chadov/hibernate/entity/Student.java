@@ -2,10 +2,7 @@ package com.epam.chadov.hibernate.entity;
 
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Andrey_Chadov on 10/24/2017.
@@ -15,6 +12,7 @@ import javax.persistence.Table;
 public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
