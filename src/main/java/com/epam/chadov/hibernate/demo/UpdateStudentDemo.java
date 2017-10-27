@@ -32,6 +32,9 @@ public class UpdateStudentDemo {
             //update first name to Scooby
             myStudent.setFirstName("Scooby");
 
+            //update all emails to 'foo@mail.com'
+            session.createQuery("update Student set email = 'foo@mail.com'").executeUpdate();
+
             //commit the transaction
             session.getTransaction().commit();
 
