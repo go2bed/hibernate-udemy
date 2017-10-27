@@ -30,7 +30,13 @@ public class QueryStudentDemo {
             List<Student> studentList = session.createQuery("from Student").getResultList();
 
              //display the students
-            System.out.println(studentList);
+            displayTheStudents(studentList);
+
+
+            //query students: lastName = 'Doe'
+            studentList = session.createQuery("from Student s where  s.lastName = 'Doe'").getResultList();
+            displayTheStudents(studentList);
+
 
             //commit the transaction
             System.out.println("Commiting...");
@@ -46,5 +52,9 @@ public class QueryStudentDemo {
             System.out.println("Factory is closed");
         }
 
+    }
+
+    private static void displayTheStudents(List<Student> studentList) {
+        System.out.println(studentList);
     }
 }
