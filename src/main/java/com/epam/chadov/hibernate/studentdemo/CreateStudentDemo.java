@@ -1,4 +1,4 @@
-package com.epam.chadov.hibernate.demo;
+package com.epam.chadov.hibernate.studentdemo;
 
 import com.epam.chadov.hibernate.entity.Student;
 import org.hibernate.Session;
@@ -6,11 +6,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Andrey_Chadov on 10/26/2017.
+ * @author Andrey_Chadov on 10/24/2017.
  */
-public class PrimaryKeyDemo {
+public class CreateStudentDemo {
 
     public static void main(String[] args) {
+
         //create session factory
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -20,22 +21,16 @@ public class PrimaryKeyDemo {
         //create session
         Session session = factory.getCurrentSession();
         try {
-            //create 3 student objects
-            System.out.println("Creating 3 student objects...");
-            Student tempStudent = new Student("John", "Doe", "john@mail.com");
-            Student tempStudent2 = new Student("Marry", "Public", "marry@mail.com");
-            Student tempStudent3 = new Student("Bonita", "Applebum", "bonita@mail.com");
-
+            //create a student object
+            System.out.println("Creating a student object...");
+            Student tempStudent = new Student("Paul", "Wall", "grob@mail.com");
 
             //start transaction
             session.beginTransaction();
 
             //save the student
-            System.out.println("Saving the students...");
+            System.out.println("Saving the student...");
             session.save(tempStudent);
-            session.save(tempStudent2);
-            session.save(tempStudent3);
-
 
             //commit the transaction
             System.out.println("Commiting...");

@@ -1,4 +1,4 @@
-package com.epam.chadov.hibernate.demo;
+package com.epam.chadov.hibernate.studentdemo;
 
 import com.epam.chadov.hibernate.entity.Student;
 import org.hibernate.Session;
@@ -6,13 +6,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Andrey_Chadov on 10/27/2017.
+ * @author Andrey_Chadov on 10/26/2017.
  */
-public class UpdateStudentDemo {
-
+public class PrimaryKeyDemo {
 
     public static void main(String[] args) {
-
         //create session factory
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -22,21 +20,27 @@ public class UpdateStudentDemo {
         //create session
         Session session = factory.getCurrentSession();
         try {
+            //create 3 student objects
+            System.out.println("Creating 3 student objects...");
+            Student tempStudent = new Student("John", "Doe", "john@mail.com");
+            Student tempStudent2 = new Student("Marry", "Public", "marry@mail.com");
+            Student tempStudent3 = new Student("Bonita", "Applebum", "bonita@mail.com");
+
 
             //start transaction
             session.beginTransaction();
 
-            //retrieve student based on the id : 1
-            Student myStudent = session.get(Student.class, 1);
+            //save the student
+            System.out.println("Saving the students...");
+            session.save(tempStudent);
+            session.save(tempStudent2);
+            session.save(tempStudent3);
 
-            //update first name to Scooby
-            myStudent.setFirstName("Scooby");
-
-            //update all emails to 'foo@mail.com'
-            session.createQuery("update Student set email = 'foo@mail.com'").executeUpdate();
 
             //commit the transaction
+            System.out.println("Commiting...");
             session.getTransaction().commit();
+
 
             System.out.println("Done!");
         } catch (Exception e) {

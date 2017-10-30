@@ -1,4 +1,4 @@
-package com.epam.chadov.hibernate.demo;
+package com.epam.chadov.hibernate.studentdemo;
 
 import com.epam.chadov.hibernate.entity.Student;
 import org.hibernate.Session;
