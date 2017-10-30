@@ -1,18 +1,13 @@
-package com.epam.chadov.hibernate.entity;
-
-
-
-import com.epam.chadov.hibernate.utils.DateUtils;
+package com.epam.chadov.hibernate.entities;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
- * @author Andrey_Chadov on 10/24/2017.
+ * @author Andrey_Chadov on 10/30/2017.
  */
 @Entity
-@Table(name = "student")
-public class Student {
+@Table(name = "instructor")
+public class Instructor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,26 +23,14 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    @Column(name="date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_detail_id")
+    private InstructorDetail instructorDetail;
 
-    public Student() {
-    }
-
-    public Student(String firstName, String lastName, String email) {
+    public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-    }
-
-    public Student( String firstName, String lastName, String email, Date theDateOfBirth) {
-
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.dateOfBirth = theDateOfBirth;
-
     }
 
     public int getId() {
@@ -82,11 +65,22 @@ public class Student {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) + "]";
+    public InstructorDetail getInstructorDetail() {
+        return instructorDetail;
     }
 
+    public void setInstructorDetail(InstructorDetail instructorDetail) {
+        this.instructorDetail = instructorDetail;
+    }
 
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", instructorDetail=" + instructorDetail +
+                '}';
+    }
 }
