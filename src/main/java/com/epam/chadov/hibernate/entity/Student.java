@@ -2,7 +2,10 @@ package com.epam.chadov.hibernate.entity;
 
 
 
+import com.epam.chadov.hibernate.utils.DateUtils;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author Andrey_Chadov on 10/24/2017.
@@ -25,6 +28,10 @@ public class Student {
     @Column(name = "email")
     private String email;
 
+    @Column(name="date_of_birth")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
     public Student() {
     }
 
@@ -32,6 +39,15 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Student( String firstName, String lastName, String email, Date theDateOfBirth) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = theDateOfBirth;
+
     }
 
     public int getId() {
@@ -68,11 +84,9 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) + "]";
     }
+
+
 }

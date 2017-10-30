@@ -1,9 +1,12 @@
 package com.epam.chadov.hibernate.studentdemo;
 
 import com.epam.chadov.hibernate.entity.Student;
+import com.epam.chadov.hibernate.utils.DateUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.util.Date;
 
 /**
  * @author Andrey_Chadov on 10/24/2017.
@@ -23,8 +26,10 @@ public class CreateStudentDemo {
         try {
             //create a student object
             System.out.println("Creating a student object...");
-            Student tempStudent = new Student("Paul", "Wall", "grob@mail.com");
+            String theDateOfBirthStr = "31/12/1991";
+            Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
 
+            Student tempStudent = new Student("John", "Doe", "john@java.com", theDateOfBirth);
             //start transaction
             session.beginTransaction();
 
