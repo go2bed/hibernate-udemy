@@ -44,6 +44,8 @@ public class CreateDemo {
             System.out.println("Done!");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            sessionFactory.close();
         }
     }
 }
