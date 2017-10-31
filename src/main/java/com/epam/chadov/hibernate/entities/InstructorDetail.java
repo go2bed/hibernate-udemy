@@ -20,7 +20,7 @@ public class InstructorDetail {
     @Column(name = "hobby")
     private String hobby;
 
-    @OneToOne(mappedBy = "instructorDetail")
+    @OneToOne(mappedBy = "instructorDetail", cascade=CascadeType.ALL)
     private Instructor instructor;
 
     public InstructorDetail() {
