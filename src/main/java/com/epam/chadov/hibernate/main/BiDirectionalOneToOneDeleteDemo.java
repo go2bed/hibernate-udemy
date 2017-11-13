@@ -24,12 +24,15 @@ public class BiDirectionalOneToOneDeleteDemo {
             session.beginTransaction();
 
             //get the instructor detail object
-            int theId = 2;
+            int theId = 1;
             InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class, theId);
 
             //print the associated instructor
             System.out.println("the associated instructor : " + tempInstructorDetail.getInstructor());
 
+            //remove the associated object reference
+            //break bi-directional link
+            tempInstructorDetail.getInstructor().setInstructorDetail(null);
 
             //now delete the instructor detail
             System.out.println("Deleting tempInstructorDetail : " + tempInstructorDetail);
