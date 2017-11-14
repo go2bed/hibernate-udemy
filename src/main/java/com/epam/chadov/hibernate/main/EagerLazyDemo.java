@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 /**
  * @author Andrey_Chadov on 10/30/2017.
  */
-public class GetInstructorCoursesDemo {
+public class EagerLazyDemo {
 
     public static void main(String[] args) {
 
@@ -29,13 +29,13 @@ public class GetInstructorCoursesDemo {
 
             Instructor tempInstructor = session.get(Instructor.class, theId);
 
-            System.out.println("Instructor: " + tempInstructor);
+            System.out.println("My some : Instructor: " + tempInstructor);
 
-            System.out.println("Courses: " + tempInstructor.getCourses());
+            System.out.println("My some : Courses: " + tempInstructor.getCourses());
 
             //commit transaction
             session.getTransaction().commit();
-
+            System.out.println("Done!");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
