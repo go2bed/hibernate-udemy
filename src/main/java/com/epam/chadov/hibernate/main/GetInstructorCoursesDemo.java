@@ -1,5 +1,6 @@
 package com.epam.chadov.hibernate.main;
 
+import com.epam.chadov.hibernate.entities.Course;
 import com.epam.chadov.hibernate.entities.Instructor;
 import com.epam.chadov.hibernate.entities.InstructorDetail;
 import org.hibernate.Session;
@@ -7,40 +8,34 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Andrey_Chadov on 10/31/2017.
+ * @author Andrey_Chadov on 10/30/2017.
  */
-public class BiDirectionalOneToOneDeleteDemo {
+public class GetInstructorCoursesDemo {
 
     public static void main(String[] args) {
 
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
-
 
         try (Session session = sessionFactory.getCurrentSession()) {
             //start a transaction
             session.beginTransaction();
 
-            //get the instructor detail object
+            //get the instructor from db
             int theId = 1;
-            InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class, theId);
 
-            //print the associated instructor
-            System.out.println("the associated instructor : " + tempInstructorDetail.getInstructor());
+            Instructor tempInstructor = session.get(Instructor.class, theId);
 
-            //remove the associated object reference
-            //break bi-directional link
-            tempInstructorDetail.getInstructor().setInstructorDetail(null);
+            System.out.println("Instructor: " + tempInstructor);
 
-            //now delete the instructor detail
-            System.out.println("Deleting tempInstructorDetail : " + tempInstructorDetail);
-            session.delete(tempInstructorDetail);
+            System.out.println("Courses: " + tempInstructor.getCourses());
 
             //commit transaction
             session.getTransaction().commit();
-            System.out.println("Done!");
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

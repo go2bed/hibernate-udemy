@@ -1,5 +1,6 @@
 package com.epam.chadov.hibernate.main;
 
+import com.epam.chadov.hibernate.entities.Course;
 import com.epam.chadov.hibernate.entities.Instructor;
 import com.epam.chadov.hibernate.entities.InstructorDetail;
 import org.hibernate.Session;
@@ -7,36 +8,42 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Andrey_Chadov on 10/31/2017.
+ * @author Andrey_Chadov on 10/30/2017.
  */
-public class BiDirectionalOneToOneDemo {
+public class CreateCoursesDemo {
 
     public static void main(String[] args) {
 
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
-
 
         try (Session session = sessionFactory.getCurrentSession()) {
             //start a transaction
             session.beginTransaction();
 
-            //get the instructor detail object
-            int theId = 2;
-            InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class, theId);
+            //get the instructor from db
+            int theId = 1;
 
-            //print detail
-            System.out.println("tempInstructorDetail : " + tempInstructorDetail);
+            Instructor tempInstructor = session.get(Instructor.class, theId);
 
+            //create some courses
+            Course tempCourse1 = new Course("Air guitar - THe Ultimate Guide");
+            Course tempCourse2 = new Course("The Pinnball Masterclass");
 
-            //print the associated instructor
-            System.out.println("the associated instructor : " + tempInstructorDetail.getInstructor());
+            //add courses to instructor
+            tempInstructor.addCourse(tempCourse1);
+            tempInstructor.addCourse(tempCourse2);
+
+            //save the courses
+            session.save(tempCourse1);
+            session.save(tempCourse2);
 
             //commit transaction
             session.getTransaction().commit();
-            System.out.println("Done!");
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
