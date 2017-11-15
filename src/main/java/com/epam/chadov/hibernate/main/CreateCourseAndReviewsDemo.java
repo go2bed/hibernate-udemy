@@ -3,6 +3,7 @@ package com.epam.chadov.hibernate.main;
 import com.epam.chadov.hibernate.entities.Course;
 import com.epam.chadov.hibernate.entities.Instructor;
 import com.epam.chadov.hibernate.entities.InstructorDetail;
+import com.epam.chadov.hibernate.entities.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 /**
  * @author Andrey_Chadov on 10/30/2017.
  */
-public class CreateCoursesDemo {
+public class CreateCourseAndReviewsDemo {
 
     public static void main(String[] args) {
 
@@ -18,28 +19,27 @@ public class CreateCoursesDemo {
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)
                 .buildSessionFactory();
 
         try (Session session = sessionFactory.getCurrentSession()) {
             //start a transaction
             session.beginTransaction();
 
-            //get the instructor from db
-            int theId = 1;
+            //create a course
+            Course tempCourse = new Course("Pacman - Hot To Score One Million points");
 
-            Instructor tempInstructor = session.get(Instructor.class, theId);
+            //add some reviews
+            tempCourse.addReview(new Review("Great course...love it!"));
+            tempCourse.addReview(new Review("Good course., job well done!"));
+            tempCourse.addReview(new Review("What a dumb course?!"));
 
-            //create some courses
-            Course tempCourse1 = new Course("Air guitar - THe Ultimate Guide");
-            Course tempCourse2 = new Course("The Pinnball Masterclass");
+            //save the course...and leverage the cascade all
+            System.out.println("Saving the course");
+            System.out.println(tempCourse);
+            System.out.println(tempCourse.getReviews());
 
-            //add courses to instructor
-            tempInstructor.addCourse(tempCourse1);
-            tempInstructor.addCourse(tempCourse2);
-
-            //save the courses
-            session.save(tempCourse1);
-            session.save(tempCourse2);
+            session.save(tempCourse);
 
             //commit transaction
             session.getTransaction().commit();

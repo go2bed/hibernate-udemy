@@ -1,6 +1,8 @@
 package com.epam.chadov.hibernate.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author by Andrey_Chadov on 14.11.2017.
@@ -17,10 +19,15 @@ public class Course {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private List<Review> reviews;
 
     public Course() {
     }
@@ -51,6 +58,24 @@ public class Course {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    //add convenience methods for adding reviews
+
+    public void addReview(Review tempReview) {
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+        reviews.add(tempReview);
+
     }
 
     @Override
