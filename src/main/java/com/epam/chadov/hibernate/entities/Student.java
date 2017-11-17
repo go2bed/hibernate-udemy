@@ -1,11 +1,8 @@
 package com.epam.chadov.hibernate.entities;
 
 
-import com.epam.chadov.hibernate.utils.DateUtils;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,11 +26,10 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
@@ -46,15 +42,6 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-    }
-
-    public Student(String firstName, String lastName, String email, Date theDateOfBirth) {
-
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.dateOfBirth = theDateOfBirth;
-
     }
 
     public int getId() {
@@ -89,14 +76,6 @@ public class Student {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public List<Course> getCourses() {
         return courses;
     }
@@ -116,8 +95,8 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) + "]";
+        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email +
+               "]";
     }
 
 
